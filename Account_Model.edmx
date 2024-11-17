@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AccountModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblLesson">
+          <Key>
+            <PropertyRef Name="lessonID" />
+          </Key>
+          <Property Name="lessonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="ntext" Nullable="false" />
+          <Property Name="subjectID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSubject">
+          <Key>
+            <PropertyRef Name="subjectID" />
+          </Key>
+          <Property Name="subjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subjectName" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Passowrd" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblLesson_tblSubject">
+          <End Role="tblSubject" Type="Self.tblSubject" Multiplicity="0..1" />
+          <End Role="tblLesson" Type="Self.tblLesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubject">
+              <PropertyRef Name="subjectID" />
+            </Principal>
+            <Dependent Role="tblLesson">
+              <PropertyRef Name="subjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteLesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lessonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="doLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Getlesson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetLesson2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetLesson3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetLesson4" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Getsubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="AccountModelStoreContainer">
+          <EntitySet Name="tblLesson" EntityType="Self.tblLesson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSubject" EntityType="Self.tblSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblLesson_tblSubject" Association="Self.FK_tblLesson_tblSubject">
+            <End Role="tblSubject" EntitySet="tblSubject" />
+            <End Role="tblLesson" EntitySet="tblLesson" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccountModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passowrd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="AccountEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <FunctionImport Name="GetUsers" ReturnType="Collection(AccountModel.GetUsers_Result)" />
+          <FunctionImport Name="doLogin" ReturnType="Collection(AccountModel.doLogin_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblLessons" EntityType="AccountModel.tblLesson" />
+          <EntitySet Name="tblSubjects" EntityType="AccountModel.tblSubject" />
+          <AssociationSet Name="FK_tblLesson_tblSubject" Association="AccountModel.FK_tblLesson_tblSubject">
+            <End Role="tblSubject" EntitySet="tblSubjects" />
+            <End Role="tblLesson" EntitySet="tblLessons" />
+          </AssociationSet>
+          <FunctionImport Name="Getsubject" ReturnType="Collection(AccountModel.Getsubject_Result)" />
+          <FunctionImport Name="Getlesson" ReturnType="Collection(AccountModel.Getlesson_Result)" />
+          <FunctionImport Name="GetLesson2" ReturnType="Collection(AccountModel.GetLesson2_Result)" />
+          <FunctionImport Name="GetLesson3" ReturnType="Collection(AccountModel.GetLesson3_Result)" />
+          <FunctionImport Name="GetLesson4" ReturnType="Collection(AccountModel.GetLesson4_Result)" />
+          <FunctionImport Name="DeleteLesson">
+            <Parameter Name="lessonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetUsers_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Passowrd" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="doLogin_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Passowrd" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="tblLesson">
+          <Key>
+            <PropertyRef Name="lessonID" />
+          </Key>
+          <Property Name="lessonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="subjectID" Type="Int32" />
+          <NavigationProperty Name="tblSubject" Relationship="AccountModel.FK_tblLesson_tblSubject" FromRole="tblLesson" ToRole="tblSubject" />
+        </EntityType>
+        <EntityType Name="tblSubject">
+          <Key>
+            <PropertyRef Name="subjectID" />
+          </Key>
+          <Property Name="subjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subjectName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblLessons" Relationship="AccountModel.FK_tblLesson_tblSubject" FromRole="tblSubject" ToRole="tblLesson" />
+        </EntityType>
+        <Association Name="FK_tblLesson_tblSubject">
+          <End Type="AccountModel.tblSubject" Role="tblSubject" Multiplicity="0..1" />
+          <End Type="AccountModel.tblLesson" Role="tblLesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubject">
+              <PropertyRef Name="subjectID" />
+            </Principal>
+            <Dependent Role="tblLesson">
+              <PropertyRef Name="subjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Getsubject_Result">
+          <Property Type="Int32" Name="subjectID" Nullable="false" />
+          <Property Type="String" Name="subjectName" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="Getlesson_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="lessonID" Nullable="false" />
+          <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="GetLesson2_Result">
+          <Property Type="Int32" Name="lessonID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="GetLesson3_Result">
+          <Property Type="Int32" Name="lessonID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="GetLesson4_Result">
+          <Property Type="Int32" Name="lessonID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccountModelStoreContainer" CdmEntityContainer="AccountEntities">
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="AccountModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUsers" FunctionName="AccountModel.Store.GetUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.GetUsers_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="doLogin" FunctionName="AccountModel.Store.doLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.doLogin_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tblLessons">
+            <EntityTypeMapping TypeName="AccountModel.tblLesson">
+              <MappingFragment StoreEntitySet="tblLesson">
+                <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubjects">
+            <EntityTypeMapping TypeName="AccountModel.tblSubject">
+              <MappingFragment StoreEntitySet="tblSubject">
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+                <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Getsubject" FunctionName="AccountModel.Store.Getsubject">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.Getsubject_Result">
+                <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Getlesson" FunctionName="AccountModel.Store.Getlesson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.Getlesson_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLesson2" FunctionName="AccountModel.Store.GetLesson2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.GetLesson2_Result">
+                <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLesson3" FunctionName="AccountModel.Store.GetLesson3">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.GetLesson3_Result">
+                <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLesson4" FunctionName="AccountModel.Store.GetLesson4">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AccountModel.GetLesson4_Result">
+                <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteLesson" FunctionName="AccountModel.Store.DeleteLesson" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
