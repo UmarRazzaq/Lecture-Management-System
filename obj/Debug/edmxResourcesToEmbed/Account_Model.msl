@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AccountModelStoreContainer" CdmEntityContainer="AccountEntities">
+    <EntitySetMapping Name="tblUsers">
+      <EntityTypeMapping TypeName="AccountModel.tblUser">
+        <MappingFragment StoreEntitySet="tblUser">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetUsers" FunctionName="AccountModel.Store.GetUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.GetUsers_Result">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="doLogin" FunctionName="AccountModel.Store.doLogin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.doLogin_Result">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Passowrd" ColumnName="Passowrd" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="tblLessons">
+      <EntityTypeMapping TypeName="AccountModel.tblLesson">
+        <MappingFragment StoreEntitySet="tblLesson">
+          <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblSubjects">
+      <EntityTypeMapping TypeName="AccountModel.tblSubject">
+        <MappingFragment StoreEntitySet="tblSubject">
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+          <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Getsubject" FunctionName="AccountModel.Store.Getsubject">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.Getsubject_Result">
+          <ScalarProperty Name="subjectID" ColumnName="subjectID" />
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Getlesson" FunctionName="AccountModel.Store.Getlesson">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.Getlesson_Result">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLesson2" FunctionName="AccountModel.Store.GetLesson2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.GetLesson2_Result">
+          <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLesson3" FunctionName="AccountModel.Store.GetLesson3">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.GetLesson3_Result">
+          <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLesson4" FunctionName="AccountModel.Store.GetLesson4">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AccountModel.GetLesson4_Result">
+          <ScalarProperty Name="lessonID" ColumnName="lessonID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="subjectName" ColumnName="subjectName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteLesson" FunctionName="AccountModel.Store.DeleteLesson" />
+  </EntityContainerMapping>
+</Mapping>

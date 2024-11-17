@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AccountModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Passowrd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="AccountEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <FunctionImport Name="GetUsers" ReturnType="Collection(AccountModel.GetUsers_Result)" />
+    <FunctionImport Name="doLogin" ReturnType="Collection(AccountModel.doLogin_Result)">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="tblLessons" EntityType="AccountModel.tblLesson" />
+    <EntitySet Name="tblSubjects" EntityType="AccountModel.tblSubject" />
+    <AssociationSet Name="FK_tblLesson_tblSubject" Association="AccountModel.FK_tblLesson_tblSubject">
+      <End Role="tblSubject" EntitySet="tblSubjects" />
+      <End Role="tblLesson" EntitySet="tblLessons" />
+    </AssociationSet>
+    <FunctionImport Name="Getsubject" ReturnType="Collection(AccountModel.Getsubject_Result)" />
+    <FunctionImport Name="Getlesson" ReturnType="Collection(AccountModel.Getlesson_Result)" />
+    <FunctionImport Name="GetLesson2" ReturnType="Collection(AccountModel.GetLesson2_Result)" />
+    <FunctionImport Name="GetLesson3" ReturnType="Collection(AccountModel.GetLesson3_Result)" />
+    <FunctionImport Name="GetLesson4" ReturnType="Collection(AccountModel.GetLesson4_Result)" />
+    <FunctionImport Name="DeleteLesson">
+      <Parameter Name="lessonID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetUsers_Result">
+    <Property Type="Int32" Name="userID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Passowrd" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="doLogin_Result">
+    <Property Type="Int32" Name="userID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Passowrd" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="tblLesson">
+    <Key>
+      <PropertyRef Name="lessonID" />
+    </Key>
+    <Property Name="lessonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="subjectID" Type="Int32" />
+    <NavigationProperty Name="tblSubject" Relationship="AccountModel.FK_tblLesson_tblSubject" FromRole="tblLesson" ToRole="tblSubject" />
+  </EntityType>
+  <EntityType Name="tblSubject">
+    <Key>
+      <PropertyRef Name="subjectID" />
+    </Key>
+    <Property Name="subjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subjectName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblLessons" Relationship="AccountModel.FK_tblLesson_tblSubject" FromRole="tblSubject" ToRole="tblLesson" />
+  </EntityType>
+  <Association Name="FK_tblLesson_tblSubject">
+    <End Type="AccountModel.tblSubject" Role="tblSubject" Multiplicity="0..1" />
+    <End Type="AccountModel.tblLesson" Role="tblLesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSubject">
+        <PropertyRef Name="subjectID" />
+      </Principal>
+      <Dependent Role="tblLesson">
+        <PropertyRef Name="subjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="Getsubject_Result">
+    <Property Type="Int32" Name="subjectID" Nullable="false" />
+    <Property Type="String" Name="subjectName" Nullable="false" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="Getlesson_Result">
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+    <Property Type="Int32" Name="lessonID" Nullable="false" />
+    <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="GetLesson2_Result">
+    <Property Type="Int32" Name="lessonID" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="GetLesson3_Result">
+    <Property Type="Int32" Name="lessonID" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+  </ComplexType>
+  <ComplexType Name="GetLesson4_Result">
+    <Property Type="Int32" Name="lessonID" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="subjectName" Nullable="true" MaxLength="500" />
+  </ComplexType>
+</Schema>
